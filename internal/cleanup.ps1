@@ -9,7 +9,7 @@ if ((Test-IsAdmin) -eq $false)
     Stop-Process -Id $PID
 }
 
-restic forget --tag files --keep-within 20h --keep-within-daily 7d --keep-within-weekly 4w --keep-monthly 12m --keep-yearly 2y
+restic forget --tag files --keep-within 20h --keep-within-daily 7d --keep-within-weekly 4w --keep-monthly 15m --keep-last 3
 restic forget --tag system --keep-within 4w
 restic prune
 
