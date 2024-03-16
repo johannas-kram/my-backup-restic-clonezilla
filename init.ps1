@@ -54,7 +54,7 @@ $Env:RESTIC_PASSWORD_FILE="$here\internal\password-file.txt"
 [System.Environment]::SetEnvironmentVariable("RESTIC_PASSWORD_FILE", "$Env:RESTIC_PASSWORD_FILE", "Machine")
 
 # create password file
-"$resticPwd" | Out-file -FilePath "$here\internal\password-file.txt"
+"$resticPwd" | Out-file -FilePath .\internal\password-file.txt
 
 # setup rclone
 $configPath="$HOME\AppData\Roaming\rclone\rclone.conf"
@@ -65,6 +65,9 @@ Write-Host "In the following step, we will refresh the pcloud token. Say yes twi
 rclone config reconnect pcloud:
 
 # setup schedules
+.\internal\init\schedules\files-backup.ps1
+.\internal\init\schedules\cleanup.ps1
+.\internal\init\schedules\resticify-system-backup.ps1
 
 # init restic repo if not already done
 if (![System.IO.File]::Exists("${localDevice}:\repo\config")) {
@@ -74,7 +77,7 @@ if (![System.IO.File]::Exists("${localDevice}:\repo\config")) {
 # sync to pcloud
 Write-Host ""
 Write-Host ""
-shadowrun -env -exec="$here\internal\sync-pcloud.ps1" ${localDevice}: -- %shadow_device_1%
+shadowrun -env -exec=.\internal\sync-pcloud.ps1 ${localDevice}: -- %shadow_device_1%
 
 Write-Host ""
 Write-Host "Successfully initialized, installed and prepared, initialized restic repo locally (if not done before), synced to pcloud" -ForegroundColor Green
