@@ -41,6 +41,7 @@ Write-Host ""
 
 # set environment variables
 [System.Environment]::SetEnvironmentVariable("PATH", "$Env:PATH;$here\internal\bin\rclone", "Machine")
+[System.Environment]::SetEnvironmentVariable("PATH", "$Env:PATH;$here\internal\bin\shadowrun", "Machine")
 [System.Environment]::SetEnvironmentVariable("BACKUP_LOCAL_DEVICE", "${localDevice}:", "Machine")
 [System.Environment]::SetEnvironmentVariable("RESTIC_REPOSITORY", "${localDevice}:\repo", "Machine")
 [System.Environment]::SetEnvironmentVariable("RESTIC_PASSWORD_FILE", "$here\internal\password-file.txt", "Machine")
@@ -68,4 +69,4 @@ if (![System.IO.File]::Exists("${localDevice}:\repo\config")) {
 # sync to pcloud
 Write-Host ""
 Write-Host ""
-"$here\internal\bin\shadowrun.exe" -env -exec="$here\internal\sync-pcloud.bat" ${localDevice}: -- %shadow_device_1%
+shadowrun -env -exec="$here\internal\sync-pcloud.bat" ${localDevice}: -- %shadow_device_1%
