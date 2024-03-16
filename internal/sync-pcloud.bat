@@ -12,7 +12,7 @@ if %errorlevel% neq 0 echo error & exit
 echo syncing
 echo.
 echo.
-rclone sync %shadowCopy%\repo\ pcloud:backupRepo
+rclone sync %shadowCopy%\repo\ pcloud:
 
 echo.
 echo.
