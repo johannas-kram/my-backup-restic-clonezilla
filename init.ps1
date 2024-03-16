@@ -69,4 +69,4 @@ if (![System.IO.File]::Exists("${localDevice}:\repo\config")) {
 # sync to pcloud
 Write-Host ""
 Write-Host ""
-shadowrun -env -exec="$here\internal\sync-pcloud.bat" ${localDevice}: -- %shadow_device_1%
+shadowrun -env -exec="$here\internal\sync-pcloud.ps1" ${localDevice}: -- %shadow_device_1%
