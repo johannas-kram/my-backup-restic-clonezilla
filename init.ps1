@@ -1,11 +1,11 @@
 $here=Get-Location
 
 # run as Admin
-function Check-Admin {
+function Test-IsAdmin {
     $currentUser = New-Object Security.Principal.WindowsPrincipal $([Security.Principal.WindowsIdentity]::GetCurrent())
     $currentUser.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)
 }
-if ((Check-Admin) -eq $false)  
+if ((Test-IsAdmin) -eq $false)  
 {
     Start-Process powershell.exe -Verb RunAs -ArgumentList ('-noprofile -noexit -file "{0}" -elevated' -f ($myinvocation.MyCommand.Definition))
     Stop-Process -Id $PID
