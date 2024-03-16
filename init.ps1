@@ -40,13 +40,18 @@ Write-Host ""
 Write-Host ""
 
 # set environment variables
-[System.Environment]::SetEnvironmentVariable("PATH", "$Env:PATH;$here\internal\bin\rclone", "Machine")
-[System.Environment]::SetEnvironmentVariable("PATH", "$Env:PATH;$here\internal\bin\shadowrun", "Machine")
-[System.Environment]::SetEnvironmentVariable("BACKUP_LOCAL_DEVICE", "${localDevice}:", "Machine")
-[System.Environment]::SetEnvironmentVariable("BACKUP_WORKING_DIR", "$here", "Machine")
-[System.Environment]::SetEnvironmentVariable("FILES_BACKUP_SOURCE_DIR", "$filesDir", "Machine")
-[System.Environment]::SetEnvironmentVariable("RESTIC_REPOSITORY", "${localDevice}:\repo", "Machine")
-[System.Environment]::SetEnvironmentVariable("RESTIC_PASSWORD_FILE", "$here\internal\password-file.txt", "Machine")
+$Env:PATH="$Env:Path;$here\internal\bin\rclone;$here\internal\bin\shadowrun"
+$Env:BACKUP_LOCAL_DEVICE="${localDevice}:"
+$Env:BACKUP_WORKING_DIR="$here"
+$Env:FILES_BACKUP_SOURCE_DIR="$filesDir"
+$Env:RESTIC_REPOSITORY="${localDevice}:\repo"
+$Env:RESTIC_PASSWORD_FILE="$here\internal\password-file.txt"
+[System.Environment]::SetEnvironmentVariable("PATH", "$Env:PATH", "Machine")
+[System.Environment]::SetEnvironmentVariable("BACKUP_LOCAL_DEVICE", "$Env:BACKUP_LOCAL_DEVICE", "Machine")
+[System.Environment]::SetEnvironmentVariable("BACKUP_WORKING_DIR", "$Env:BACKUP_WORKING_DIR", "Machine")
+[System.Environment]::SetEnvironmentVariable("FILES_BACKUP_SOURCE_DIR", "$Env:FILES_BACKUP_SOURCE_DIR", "Machine")
+[System.Environment]::SetEnvironmentVariable("RESTIC_REPOSITORY", "$Env:RESTIC_REPOSITORY", "Machine")
+[System.Environment]::SetEnvironmentVariable("RESTIC_PASSWORD_FILE", "$Env:RESTIC_PASSWORD_FILE", "Machine")
 
 # create password file
 "$resticPwd" | Out-file -FilePath "$here\internal\password-file.txt"
