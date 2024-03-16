@@ -43,10 +43,10 @@ Write-Host ""
 [System.Environment]::SetEnvironmentVariable("PATH", "$Env:PATH;$here\internal\bin\rclone", "Machine")
 [System.Environment]::SetEnvironmentVariable("PATH", "$Env:PATH;$here\internal\bin\shadowrun", "Machine")
 [System.Environment]::SetEnvironmentVariable("BACKUP_LOCAL_DEVICE", "${localDevice}:", "Machine")
-[System.Environment]::SetEnvironmentVariable("RESTIC_REPOSITORY", "${localDevice}:\repo", "Machine")
-[System.Environment]::SetEnvironmentVariable("RESTIC_PASSWORD_FILE", "$here\internal\password-file.txt", "Machine")
 [System.Environment]::SetEnvironmentVariable("BACKUP_WORKING_DIR", "$here", "Machine")
 [System.Environment]::SetEnvironmentVariable("FILES_BACKUP_SOURCE_DIR", "$filesDir", "Machine")
+[System.Environment]::SetEnvironmentVariable("RESTIC_REPOSITORY", "${localDevice}:\repo", "Machine")
+[System.Environment]::SetEnvironmentVariable("RESTIC_PASSWORD_FILE", "$here\internal\password-file.txt", "Machine")
 
 # create password file
 "$resticPwd" | Out-file -FilePath "$here\internal\password-file.txt"
@@ -54,12 +54,12 @@ Write-Host ""
 # setup rclone
 $configPath="$HOME\AppData\Roaming\rclone\rclone.conf"
 $token="token = {`"access_token`":`"`",`"token_type`":`"bearer`",`"expiry`":`"0001-01-01T00:00:00Z`"}"
-"[pcloud]`ntype = pcloud`nclient_id = $pcloudClientId`nclient_secret = $pcloudClientSecret`nhostname = eapi.pcloud.com`n$token`n" | Out-file -FilePath "$configPath"
+$pcloudConfigBlock="`n`n[pcloud]`ntype = pcloud`nclient_id = $pcloudClientId`nclient_secret = $pcloudClientSecret`nhostname = eapi.pcloud.com`n$token`n"
+Add-Content -Path "$configPath" -Value "$pcloudConfigBlock"
 Write-Host "In the following step, we will refresh the pcloud token. Say yes twice (due to defaults you simply should have to press enter twice)"
 rclone config reconnect pcloud:
 
 # setup schedules
-
 
 # init restic repo if not already done
 if (![System.IO.File]::Exists("${localDevice}:\repo\config")) {
@@ -70,3 +70,6 @@ if (![System.IO.File]::Exists("${localDevice}:\repo\config")) {
 Write-Host ""
 Write-Host ""
 shadowrun -env -exec="$here\internal\sync-pcloud.ps1" ${localDevice}: -- %shadow_device_1%
+
+Write-Host ""
+Write-Host "Successfully initialized, installed and prepared, initialized restic repo locally (if not done before), synced to pcloud" -ForegroundColor Green
