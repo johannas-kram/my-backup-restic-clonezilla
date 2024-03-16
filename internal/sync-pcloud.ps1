@@ -3,7 +3,8 @@ $shadowCopy=$args[0]
 restic check
 
 if ($?) {
-    rclone sync $shadowCopy\repo\ pcloud:
+    rclone mkdir pcloud:backupRepo
+    rclone sync $shadowCopy\backupRepo\ pcloud:backupRepo\
 } else {
     Write-Host ""
     Write-Host "restic check has detected errors in your backup repository!" -ForegroundColor Red

@@ -44,7 +44,7 @@ $Env:PATH="$Env:Path;$here\internal\bin\rclone;$here\internal\bin\shadowrun"
 $Env:BACKUP_LOCAL_DEVICE="${localDevice}:"
 $Env:BACKUP_WORKING_DIR="$here"
 $Env:FILES_BACKUP_SOURCE_DIR="$filesDir"
-$Env:RESTIC_REPOSITORY="${localDevice}:\repo"
+$Env:RESTIC_REPOSITORY="${localDevice}:\backupRepo"
 $Env:RESTIC_PASSWORD_FILE="$here\internal\password-file.txt"
 [System.Environment]::SetEnvironmentVariable("PATH", "$Env:PATH", "Machine")
 [System.Environment]::SetEnvironmentVariable("BACKUP_LOCAL_DEVICE", "$Env:BACKUP_LOCAL_DEVICE", "Machine")
@@ -70,7 +70,7 @@ rclone config reconnect pcloud:
 .\internal\init\schedules\resticify-system-backup.ps1
 
 # init restic repo if not already done
-if (![System.IO.File]::Exists("${localDevice}:\repo\config")) {
+if (![System.IO.File]::Exists("$Env:RESTIC_REPOSITORY\config")) {
     restic init
 }
 
