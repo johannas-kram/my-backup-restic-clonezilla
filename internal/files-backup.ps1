@@ -14,4 +14,4 @@ restic backup --tag files --exclude="node_modules" --use-fs-snapshot "$Env:FILES
 # sync to pcloud
 Write-Host ""
 Write-Host ""
-shadowrun.exe -env -exec="$Env:BACKUP_WORKING_DIR\internal\sync-pcloud.bat" "$Env:BACKUP_LOCAL_DEVICE" -- %shadow_device_1%
+shadowrun -env -exec="$Env:BACKUP_WORKING_DIR\internal\sync-pcloud.bat" "$Env:BACKUP_LOCAL_DEVICE" -- %shadow_device_1%
