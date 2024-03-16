@@ -26,3 +26,6 @@ if ((Get-ChildItem -Path $FolderPath -Force | Measure-Object).Count -eq 1) {
 Write-Host ""
 Write-Host ""
 shadowrun -env -exec="$Env:BACKUP_WORKING_DIR\internal\sync-pcloud.ps1" "$Env:BACKUP_LOCAL_DEVICE" -- %shadow_device_1%
+
+Write-Host ""
+Write-Host "Successfully resticified your system image backup, snapshot created locally, synced to pcloud" -ForegroundColor Green

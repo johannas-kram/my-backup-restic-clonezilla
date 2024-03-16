@@ -15,3 +15,6 @@ restic backup --tag files --exclude="node_modules" --use-fs-snapshot "$Env:FILES
 Write-Host ""
 Write-Host ""
 shadowrun -env -exec="$Env:BACKUP_WORKING_DIR\internal\sync-pcloud.ps1" "$Env:BACKUP_LOCAL_DEVICE" -- %shadow_device_1%
+
+Write-Host ""
+Write-Host "Successfully backuped your files, snapshot created locally, synced to pcloud" -ForegroundColor Green
