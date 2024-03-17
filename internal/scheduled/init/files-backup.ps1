@@ -1,5 +1,5 @@
 $taskname = "2-Hourly files backup powered by restic, synced to pcloud"
-$action = New-ScheduledTaskAction -Execute "$Env:BACKUP_WORKING_DIR\internal\scheduled-2hourly0m-files-backup.ps1"
+$action = New-ScheduledTaskAction -Execute "$Env:BACKUP_WORKING_DIR\internal\scheduled\2hourly0m-files-backup.bat"
 
 $times=@(2, 4, 6, 8, 10, 12)
 $timeTypes=@("am", "pm")
@@ -10,6 +10,6 @@ for ($i=0; $i -lt $times.Length; $i++) {
     }
 }
 
-$principal = New-ScheduledTaskPrincipal -UserId "$Env:ComputerName\Administrator" -RunLevel Highest
+$principal = New-ScheduledTaskPrincipal -UserId "$Env:ComputerName\$Env:UserName" -RunLevel Highest
 $settings = New-ScheduledTaskSettingsSet -MultipleInstances Parallel -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries
 Register-ScheduledTask -TaskName "$taskname" -Action $action -Trigger $triggers -Principal $principal -Settings $settings
