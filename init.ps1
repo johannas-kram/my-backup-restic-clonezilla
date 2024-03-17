@@ -71,6 +71,7 @@ rclone config reconnect pcloud:
 
 # init restic repo if not already done
 if (![System.IO.File]::Exists("$Env:RESTIC_REPOSITORY\config")) {
+    mkdir $Env:RESTIC_REPOSITORY
     restic init
 }
 
