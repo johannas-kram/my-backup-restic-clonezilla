@@ -75,6 +75,8 @@ if (![System.IO.File]::Exists("$Env:RESTIC_REPOSITORY\config")) {
     restic init
 }
 
+mkdir "$Env:BACKUP_LOCAL_DEVICE\system-backup-img"
+
 # sync to pcloud
 Write-Host ""
 Write-Host ""
